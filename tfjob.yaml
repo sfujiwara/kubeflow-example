@@ -1,0 +1,40 @@
+apiVersion: kubeflow.org/v1beta1
+kind: TFJob
+metadata:
+  generateName: tfjob
+  namespace: kubeflow
+spec:
+  tfReplicaSpecs:
+    PS:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+          - name: tensorflow
+            image: gcr.io/sfujiwara/tfjob:latest
+            command:
+              - echo
+              - "hello ps"
+    Worker:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+          - name: tensorflow
+            image: gcr.io/sfujiwara/tfjob:latest
+            command:
+              - echo
+              - "hello worker"
+    Master:
+          replicas: 1
+          restartPolicy: OnFailure
+          template:
+            spec:
+              containers:
+              - name: tensorflow
+                image: gcr.io/sfujiwara/tfjob:latest
+                command:
+                  - echo
+                  - "hello master"
