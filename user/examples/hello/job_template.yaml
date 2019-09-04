@@ -1,0 +1,20 @@
+apiVersion: kubeflow.org/v1
+kind: TFJob
+metadata:
+  name: hello
+  namespace: kubeflow
+spec:
+  tfReplicaSpecs:
+    Worker:
+      replicas: 1
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+          # The pod must include a container named tensorflow:
+          # https://www.kubeflow.org/docs/components/training/tftraining/
+            - name: tensorflow
+              image: gcr.io/<PROJECT ID>/hello:latest
+              command:
+                - echo
+                - hello
